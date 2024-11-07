@@ -1,15 +1,16 @@
 // MacroeconomicIndicators.jsx
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { usePersona } from '../context/PersonaContext';
 import { useCountry } from '../context/CountryContext';
+import { useIndicator } from '../context/IndicatorContext';
 import { useNavigation } from '@react-navigation/native';
 
 const MacroeconomicIndicators = () => {
   const { selectedPersona } = usePersona();
   const { selectedCountry } = useCountry();
+  const { selectedIndicator, setSelectedIndicator } = useIndicator();
   const navigation = useNavigation();
-  const [selectedIndicator, setSelectedIndicator] = useState('GDP');
 
   const indicators = ['GDP', 'FDIInflows', 'FDIOutflows', 'ImportExportFlow'];
 
@@ -44,7 +45,6 @@ const MacroeconomicIndicators = () => {
     </ScrollView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
