@@ -1,11 +1,17 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Header from "./Header";
-import { MaterialCommunityIcons } from "@expo/vector-icons"; // Using Expo icons for ChatGPT icon
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { usePersona } from '../context/PersonaContext';
+import { useNavigation } from '@react-navigation/native';
 
-const PersonaSelection = ({ navigation }) => {
-  const handleRoleSelection = (role) => {
-    navigation.navigate("CountrySelector", { selectedRole: role });
+const PersonaSelection = () => {
+  const { selectedPersona, updatePersona } = usePersona();
+  const navigation = useNavigation();
+
+  const handlePersonaSelection = async (persona) => {
+    await updatePersona(persona);
+    navigation.navigate('CountrySelector'); // Navigate to CountrySelector instead of MacroeconomicIndicators
   };
 
   return (
@@ -16,14 +22,18 @@ const PersonaSelection = ({ navigation }) => {
       </Text>
       <View style={styles.personaContainer}>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleRoleSelection("Macroeconomic")}
+          style={[styles.button,
+          selectedPersona === 'ECON Researcher' && styles.selectedButton,
+          ]}
+          onPress={() => handlePersonaSelection('ECON Researcher')}
         >
           <Text style={styles.buttonText}>Macroeconomic Researcher</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => handleRoleSelection("Agriculture")}
+          style={[styles.button,
+          selectedPersona === 'Government Representative' && styles.selectedButton,
+          ]}
+          onPress={() => handlePersonaSelection("Government Representative")}
         >
           <Text style={styles.buttonText}>Government Official</Text>
         </TouchableOpacity>
@@ -39,6 +49,8 @@ const PersonaSelection = ({ navigation }) => {
     </View>
   );
 };
+
+// ... (styles remain unchanged)
 
 const styles = StyleSheet.create({
   container: {
@@ -100,6 +112,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 8,
+  },
+  selectedButton: {
+    backgroundColor: '#4CAF50', // Change this to your preferred highlight color
   },
 });
 

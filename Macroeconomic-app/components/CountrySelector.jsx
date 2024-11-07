@@ -1,14 +1,24 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { useCountry } from '../context/CountryContext';
+import { usePersona } from '../context/PersonaContext';
 
-const CountrySelector = ({ navigation, route }) => {
-  const { selectedRole } = route.params;
+const CountrySelector = () => {
+  const navigation = useNavigation();
+  const { setSelectedCountry } = useCountry();
+  const { selectedPersona } = usePersona();
 
   const countries = [
-    { name: "India", code: "IN" },
+    { name: "India ", code: "IN" },
     { name: "USA", code: "US" },
-    { name: "China", code: "CN" },
+    { name: "China ", code: "CN" },
   ];
+
+  const handleCountrySelection = (country) => {
+    setSelectedCountry(country.name);
+    navigation.navigate("MacroeconomicIndicators");
+  };
 
   return (
     <View style={styles.container}>
@@ -18,14 +28,7 @@ const CountrySelector = ({ navigation, route }) => {
           <TouchableOpacity
             key={country.name}
             style={styles.countryContainer}
-            onPress={() =>
-              navigation.navigate(
-                selectedRole === "Macroeconomic"
-                  ? "MacroeconomicIndicators"
-                  : "AgricultureIndicators",
-                { selectedRole }
-              )
-            }
+            onPress={() => handleCountrySelection(country)}
           >
             <Image
               source={{

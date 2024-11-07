@@ -1,73 +1,94 @@
 // MacroeconomicIndicators.jsx
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { usePersona } from '../context/PersonaContext';
+import { useCountry } from '../context/CountryContext';
+import { useNavigation } from '@react-navigation/native';
 
-import React, { useState } from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
-import CheckBox from "expo-checkbox";
-import Header from "./Header";
+const MacroeconomicIndicators = () => {
+  const { selectedPersona } = usePersona();
+  const { selectedCountry } = useCountry();
+  const navigation = useNavigation();
+  const [selectedIndicator, setSelectedIndicator] = useState('GDP');
 
-const MacroeconomicIndicators = ({ navigation, route }) => {
-  const { selectedRole } = route.params;
+  const indicators = ['GDP', 'FDIInflows', 'FDIOutflows', 'ImportExportFlow'];
 
-  const [selectedIndicators, setSelectedIndicators] = useState({
-    GDP: true,
-    FDIInflows: true,
-    FDIOutflows: false,
-    ImportExportFlow: false,
-  });
+  const toggleIndicator = (indicator) => {
+    setSelectedIndicator(indicator);
+  };
 
-  const toggleCheckbox = (indicator) => {
-    setSelectedIndicators((prevState) => ({
-      ...prevState,
-      [indicator]: !prevState[indicator],
-    }));
+  const handleShowPress = () => {
+    navigation.navigate('TimeSeriesChart', { indicator: selectedIndicator });
   };
 
   return (
-    <View style={styles.container}>
-      <Header />
-      <Text style={styles.title}>Macroeconomic (USD)</Text>
-
-      {Object.keys(selectedIndicators).map((indicator) => (
-        <View key={indicator} style={styles.checkboxContainer}>
-          <CheckBox
-            value={selectedIndicators[indicator]}
-            onValueChange={() => toggleCheckbox(indicator)}
-          />
-          <Text style={styles.checkboxLabel}>{indicator}</Text>
-        </View>
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>Macroeconomic Indicators</Text>
+      <Text style={styles.subtitle}>Selected Persona: {selectedPersona}</Text>
+      <Text style={styles.subtitle}>Selected Country: {selectedCountry}</Text>
+      {indicators.map((indicator) => (
+        <TouchableOpacity
+          key={indicator}
+          style={[
+            styles.indicatorItem,
+            selectedIndicator === indicator && styles.selectedIndicator,
+          ]}
+          onPress={() => toggleIndicator(indicator)}
+        >
+          <Text style={styles.indicatorText}>{indicator}</Text>
+        </TouchableOpacity>
       ))}
-
-      <Button
-        title="Show"
-        onPress={() => navigation.navigate("TimeSeriesChart", { selectedRole })}
-      />
-
-      {/* Icons (Placeholder) */}
-      <View style={styles.iconsContainer}>
-        {/* Add icons here as needed */}
-      </View>
-    </View>
+      <TouchableOpacity style={styles.showButton} onPress={handleShowPress}>
+        <Text style={styles.showButtonText}>Show</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    padding: 20,
+    backgroundColor: '#f0f4f7',
   },
   title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+  },
+  subtitle: {
     fontSize: 18,
-    fontWeight: "bold",
-    marginVertical: 10,
+    marginBottom: 20,
+    color: '#666',
   },
-  checkboxContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginVertical: 5,
+  indicatorItem: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
-  checkboxLabel: {
-    marginLeft: 10,
+  selectedIndicator: {
+    backgroundColor: '#e6f3ff',
+    borderColor: '#007BFF',
+  },
+  indicatorText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  showButton: {
+    backgroundColor: '#007BFF',
+    padding: 15,
+    borderRadius: 8,
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  showButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

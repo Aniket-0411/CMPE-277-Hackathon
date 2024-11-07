@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { PersonaProvider } from '../context/PersonaContext';
 
 // Import your components/screens
 import PersonaSelection from "./../components/PersonaSelection";
@@ -10,12 +11,15 @@ import MacroeconomicIndicators from "./../components/MacroeconomicIndicators";
 import AgricultureIndicators from "./../components/AgricultureIndicators";
 import TimeSeriesChart from "./../components/TimeSeriesChart";
 import ChatPage from "./../components/ChatPage";
+import { CountryProvider } from "@/context/CountryContext";
 
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
+    <PersonaProvider>
+      <CountryProvider>
     <Stack.Navigator initialRouteName="PersonaSelection">
       <Stack.Screen
         name="PersonaSelection"
@@ -48,5 +52,7 @@ export default function App() {
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
+    </CountryProvider>
+    </PersonaProvider>
   );
 }
