@@ -104,7 +104,7 @@ const TimeSeriesChart = () => {
     const indicatorCodes = {
       'GDP': 'NY.GDP.MKTP.CD',
       'GDP Growth': 'NY.GDP.MKTP.KD.ZG',
-      'FDIInflows': 'BM.KLT.DINV.WD.GD.ZS',
+      'FDIInflows': 'BX.KLT.DINV.WD.GD.ZS',
       'FDIOutflows': 'BM.KLT.DINV.WD.GD.ZS'
     };
     return indicatorCodes[indicator] || '';
