@@ -1,4 +1,3 @@
-// MacroeconomicIndicators.jsx
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { usePersona } from '../context/PersonaContext';
@@ -12,10 +11,11 @@ const MacroeconomicIndicators = () => {
   const { selectedIndicator, setSelectedIndicator } = useIndicator();
   const navigation = useNavigation();
 
-  const indicators = ['GDP', 'FDIInflows', 'FDIOutflows', 'ImportExportFlow'];
+  const indicators = ['GDP', 'GDP Growth', 'FDIInflows', 'FDIOutflows'];
 
   const toggleIndicator = (indicator) => {
     setSelectedIndicator(indicator);
+    console.log("Selected indicator:", selectedIndicator);
   };
 
   const handleShowPress = () => {
@@ -45,6 +45,7 @@ const MacroeconomicIndicators = () => {
     </ScrollView>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

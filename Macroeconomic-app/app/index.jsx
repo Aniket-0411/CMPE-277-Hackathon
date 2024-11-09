@@ -1,8 +1,8 @@
-// index.jsx or App.js
-
 import * as React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { PersonaProvider } from '../context/PersonaContext';
+import { CountryProvider } from '../context/CountryContext';
+import { IndicatorProvider } from '../context/IndicatorContext';
 
 // Import your components/screens
 import PersonaSelection from "./../components/PersonaSelection";
@@ -11,9 +11,6 @@ import MacroeconomicIndicators from "./../components/MacroeconomicIndicators";
 import AgricultureIndicators from "./../components/AgricultureIndicators";
 import TimeSeriesChart from "./../components/TimeSeriesChart";
 import ChatPage from "./../components/ChatPage";
-import { CountryProvider } from "@/context/CountryContext";
-import { IndicatorProvider } from "@/context/IndicatorContext";
-
 
 const Stack = createStackNavigator();
 

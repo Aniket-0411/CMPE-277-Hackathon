@@ -10,9 +10,9 @@ const CountrySelector = () => {
   const { selectedPersona } = usePersona();
 
   const countries = [
-    { name: "India ", code: "IN" },
+    { name: "India", code: "IN" },
     { name: "USA", code: "US" },
-    { name: "China ", code: "CN" },
+    { name: "China", code: "CN" },
   ];
 
   const handleCountrySelection = (country) => {
@@ -36,7 +36,7 @@ const CountrySelector = () => {
               }}
               style={styles.flag}
             />
-            <Text style={styles.countryName}>{country.name}</Text>
+            <Text style={styles.countryName}>{country.name} </Text>
           </TouchableOpacity>
         ))}
       </View>
