@@ -62,10 +62,7 @@ const TimeSeriesChart = () => {
   const fetchData = async () => {
     const countryCode = getCountryCode(selectedCountry);
     const indicatorCode = getIndicatorCode(selectedIndicator);
-    console.log("indicatorCode: ", indicatorCode);
-    console.log("selectedIndicator: ", selectedIndicator);
     const url = `http://api.worldbank.org/v2/countries/${countryCode}/indicators/${indicatorCode}?date=${startYear}:${endYear}&format=json`;
-    console.log("url for fetching data: ", url);
     try {
       const response = await fetch(url);
       if (!response.ok) {
